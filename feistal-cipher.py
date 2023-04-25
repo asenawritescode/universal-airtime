@@ -1,3 +1,5 @@
+from main import *
+
 def cipher(data, flag):
     
     # Check the length of the data, if even or odd
@@ -77,5 +79,5 @@ def round2(new_left, new_right):
     # return print("Left: ", left, "Right: ", right)
     return left, right
 
-cipher("12345678", 1)
-cipher("40486456", 0)
+cipher(gen_voucher(1000), 1)
+cipher('3513305946247974', 0)

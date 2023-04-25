@@ -54,10 +54,10 @@ def round1(left, right):
     left_temp = right
     # XOR right_h and left
     new_right = right_h ^ left
-    new_left = left_temp
+    new_left = int(left_temp)
     
     # return left and right, call function round2
-    return int(new_left), new_right
+    return new_left, new_right
 
 def round2(new_left, new_right):
     # right gets into function
@@ -71,5 +71,5 @@ def round2(new_left, new_right):
     # return print("Left: ", left, "Right: ", right)
     return left, right
 
-cipher("123456789", 1)
-# cipher("13048677823", 0)
+cipher("12345678", 1)
+cipher("40486456", 0)

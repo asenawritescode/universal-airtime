@@ -1,0 +1,17 @@
+The Voucher code is 16 digit code.
+
+The amount affects the positional arguments of the code.
+ie. 
+10 - ( 1 -> 2^1, 0 -> 2^0) 
+    = 01XXXXXXXXXXXXXX
+
+100 - ( 1 -> 2^2, 0 -> 2^1, 0 -> 2^0)
+    = 00X1XXXXXXXXXXXX
+
+1000 - ( 1 -> 2^3, 0 -> 2^2, 0 -> 2^1, 0 -> 2^0)
+    = 00X0XXXXXXXXXXX0
+
+The number's postional value is placed in the result of the power of the positional value.
+
+We could have our first number in the middle of the code and overlaps to the first digit.
+Run length encoding would be a good way to compress the code.

@@ -1,30 +1,47 @@
-# data = "123456789"
-data = "123455559"
-
-# divide the data into two parts using slicing 
-left, right = data[:len(data)//2], data[len(data)//2:]
-print("Start: /n")
-print("Left: ", left)
-print("Right: ", right)
-print("End: ")
-
+def cipher(data, flag):
+    left, right = data[:len(data)//2], data[len(data)//2:]
+    if flag == 1:
+        # encrypt the data   
+        l, r = round1(left, right)
+        a, b = round2(l, r)
+        # switch the left and right
+        return switch(a, b)
+    
+    elif flag == 0:
+        # decrypt the data        
+        l, r = round2(left, right)
+        l, r = round1(l, r)
+        # switch the left and right
+        switch(l, r)
+        return
+    else:
+        print("Invalid flag")
+        return
+    
 # switch them up 
 def switch(left, right):
     # switch left and right
     left, right = right, left
-
     # concat the two variables
     data = str(left) + str(right)
+    return print(data)
 
-    return data
+def swap(code, pos1, pos2): 
+    # convert string to list of characters 
+    code = list(str(code)) 
+    # swap the position of the characters 
+    code[pos1], code[pos2] = code[pos2], code[pos1] 
+    # convert list to string 
+    return ''.join(code)
 
 def  hash1(n):
-    # transposing the string
-
+    # swap string positions
+    n = swap(n, 0, 2)
     return n
 
 def  hash2(n):
-    # shift the string
+    # swap string positions
+    n = swap(n, 1, (len(n)-1))
     return n
 
 # function round 1
@@ -32,7 +49,7 @@ def round1(left, right):
     left = int(left)
     right = int(right)
     # right gets into function
-    right_h = hash1(right)
+    right_h = int(hash1(right))
     # copy right to left
     left_temp = right
     # XOR right_h and left
@@ -40,22 +57,19 @@ def round1(left, right):
     new_left = left_temp
     
     # return left and right, call function round2
-    return round2(new_left, new_right)
+    return int(new_left), new_right
 
 def round2(new_left, new_right):
     # right gets into function
     
-    right_h = hash2(new_right)
+    right_h = int(hash2(str(new_right)))
     # copy right to left
     left_temp = new_right
     # XOR right_h and left
-    right = right_h ^ new_left
+    right = right_h ^ int(new_left)
     left = left_temp    
     # return print("Left: ", left, "Right: ", right)
-    return switch(left, right)
+    return left, right
 
-
-print(round1(left, right))
-
-
-
+cipher("123456789", 1)
+# cipher("13048677823", 0)

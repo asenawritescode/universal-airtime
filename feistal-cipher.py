@@ -1,4 +1,10 @@
 def cipher(data, flag):
+    
+    # Check the length of the data, if even or odd
+    if len(data) % 2 != 0:
+        print("Invalid voucher regenerate again !")
+        return
+
     left, right = data[:len(data)//2], data[len(data)//2:]
     if flag == 1:
         # encrypt the data   

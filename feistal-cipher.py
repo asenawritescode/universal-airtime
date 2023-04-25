@@ -2,12 +2,14 @@
 # data = "123455559"
 data = "32921780431"
 
-# divide the data into two parts using slicing 
-left, right = data[:len(data)//2], data[len(data)//2:]
-print("Start: /n")
-print("Left: ", left)
-print("Right: ", right)
-print("End: ")
+#Encrypt functions
+
+def encrypt(data):    
+    # divide the data into two parts using slicing 
+    left, right = data[:len(data)//2], data[len(data)//2:]
+    print("Left: ", left)
+    print("Right: ", right)
+    return round1(left, right)
 
 # switch them up 
 def switch(left, right):
@@ -64,8 +66,4 @@ def round2(new_left, new_right):
     # return print("Left: ", left, "Right: ", right)
     return switch(left, right)
 
-
-print(round1(left, right))
-
-
-
+encrypt(data)

@@ -3,10 +3,9 @@ def cipher(data, flag):
     if flag == 1:
         # encrypt the data   
         l, r = round1(left, right)
-        l, r = round2(l, r)
+        a, b = round2(l, r)
         # switch the left and right
-        switch(l, r)
-        return 
+        return switch(a, b)
     
     elif flag == 0:
         # decrypt the data        
@@ -73,4 +72,4 @@ def round2(new_left, new_right):
     return left, right
 
 cipher("123456789", 1)
-cipher("13048677823", 0)
+# cipher("13048677823", 0)

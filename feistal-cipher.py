@@ -9,6 +9,7 @@ def encrypt(data):
     left, right = data[:len(data)//2], data[len(data)//2:]
     print("Left: ", left)
     print("Right: ", right)
+    print(data)
     return round1(left, right)
 
 # switch them up 
@@ -19,7 +20,7 @@ def switch(left, right):
     # concat the two variables
     data = str(left) + str(right)
 
-    return data
+    return print(data)
 
 def swap(code, pos1, pos2): 
     # convert string to list of characters 
@@ -66,4 +67,4 @@ def round2(new_left, new_right):
     # return print("Left: ", left, "Right: ", right)
     return switch(left, right)
 
-encrypt(data)
+encrypt("1232456789")

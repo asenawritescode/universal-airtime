@@ -22,7 +22,7 @@ def gen_voucher(amount):
 
    # Generate a random 12 digit number
    code = g("0123456789", 16 )
-   print(code)
+   print(code, "code")
    # Convert to a list of integers
    v_str = list(str(code))
    a_str = list(str(amount))

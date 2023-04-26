@@ -3,12 +3,12 @@ from main import *
 def cipher(data, flag):
     
     # Check the length of the data, if even or odd
-    if len(data) % 2 != 0:
-        print("Invalid voucher regenerate again !")
-        return
 
     left, right = data[:len(data)//2], data[len(data)//2:]
     if flag == 1:
+        if len(data) % 2 != 0:
+            print("Invalid voucher regenerate again !")
+            return
         # encrypt the data   
         l, r = round1(left, right)
         a, b = round2(l, r)
@@ -79,5 +79,5 @@ def round2(new_left, new_right):
     # return print("Left: ", left, "Right: ", right)
     return left, right
 
-cipher(gen_voucher(1000), 1)
-cipher('3513305946247974', 0)
+cipher(gen_voucher(122), 0)
+# cipher("584033877444142", 1) #- > This Decrypts

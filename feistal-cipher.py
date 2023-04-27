@@ -55,31 +55,39 @@ def  hash2(n):
 
 # function round 1
 def round1(left, right):
-    left = int(left)
-    right = int(right)
     # right gets into function
-    right_h = int(hash1(right))
+    right_h = hash1(right)
+    print(right_h, "right_h")
     # copy right to left
     left_temp = right
     # XOR right_h and left
-    new_right = right_h ^ left
-    new_left = int(left_temp)
-    
+    new_right_list = [(ord(a) ^ ord(b)) for a, b in zip(right_h, left)]
+    new_right = ''.join(map(str, new_right_list))
+    # assign the right to the new left 
+    new_left = left_temp
     # return left and right, call function round2
     return new_left, new_right
 
 def round2(new_left, new_right):
     # right gets into function
     
-    right_h = int(hash2(str(new_right)))
+    right_h = hash2(new_right)
     # copy right to left
     left_temp = new_right
     # XOR right_h and left
-    right = right_h ^ int(new_left)
+    # right = right_h ^ int(new_left)
+    right_list = [(ord(a) ^ ord(b)) for a, b in zip(right_h, new_left)]
+    print(right_list, "right_list")
+    right = ''.join(map(str, right_list))
     left = left_temp    
     # return print("Left: ", left, "Right: ", right)
     return left, right
 
 # cipher(gen_voucher(122), 1)
-cipher("6229162160415819", 1)
-cipher("2856221031310126", 0)
+# cipher("0229162160415819", 1)
+# cipher("3044746138357038", 0)
+# cipher("7226132742576398", 1)
+# cipher("673613892061701115", 0)
+cipher("1234567890", 0)
+
+# cipher("1234567890", 1)

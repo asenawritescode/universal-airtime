@@ -1,27 +1,28 @@
 from main import *
 
 def cipher(data, flag):
-    
     # Check the length of the data, if even or odd
-
     left, right = data[:len(data)//2], data[len(data)//2:]
     if flag == 1:
         if len(data) % 2 != 0:
             print("Invalid voucher regenerate again !")
-            return
+            
         # encrypt the data   
         l, r = round1(left, right)
         a, b = round2(l, r)
         # switch the left and right
-        return switch(a, b)
+        result = switch(a, b)
+        print(result)
+        return result
     
     elif flag == 0:
         # decrypt the data        
         l, r = round2(left, right)
         l, r = round1(l, r)
         # switch the left and right
-        switch(l, r)
-        return
+        result = switch(l, r)
+        print(result)
+        return result
     else:
         print("Invalid flag")
         return
@@ -32,7 +33,7 @@ def switch(left, right):
     left, right = right, left
     # concat the two variables
     data = str(left) + str(right)
-    return print(data)
+    return data
 
 def swap(code, pos1, pos2): 
     # convert string to list of characters 
@@ -79,7 +80,6 @@ def round2(new_left, new_right):
     # return print("Left: ", left, "Right: ", right)
     return left, right
 
-cipher(gen_voucher(122), 0)
-# cipher("584033877444142", 1) #- > This Decrypts
-
-encrypt(data)
+# cipher(gen_voucher(122), 1)
+cipher("6229162160415819", 1)
+cipher("2856221031310126", 0)

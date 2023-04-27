@@ -9,7 +9,6 @@ def add_value(a , v):
         # Add the amount to the voucher
         pos = pow(2, i)
         v[pos] = d
-        print(pos)
         i-=1
 
     return ''.join(map(str, v))
@@ -22,7 +21,7 @@ def gen_voucher(amount):
 
    # Generate a random 12 digit number
    code = g("0123456789", 16 )
-   print(code, "code")
+   # print(code, "code")
    # Convert to a list of integers
    v_str = list(str(code))
    a_str = list(str(amount))
@@ -30,4 +29,6 @@ def gen_voucher(amount):
    v_digits = [int(digit) for digit in v_str]
    a_digits = [int(digit) for digit in a_str]
 
-   return add_value(a_digits, v_digits)
+   final = add_value(a_digits, v_digits)
+   print(final)
+   return final

@@ -1,25 +1,37 @@
-# data = "123456789"
-# data = "123455559"
-data = "32921780431"
+from main import *
 
-#Encrypt functions
+def cipher(data, flag):
+    
+    # Check the length of the data, if even or odd
 
-def encrypt(data):    
-    # divide the data into two parts using slicing 
     left, right = data[:len(data)//2], data[len(data)//2:]
-    print("Left: ", left)
-    print("Right: ", right)
-    print(data)
-    return round1(left, right)
-
+    if flag == 1:
+        if len(data) % 2 != 0:
+            print("Invalid voucher regenerate again !")
+            return
+        # encrypt the data   
+        l, r = round1(left, right)
+        a, b = round2(l, r)
+        # switch the left and right
+        return switch(a, b)
+    
+    elif flag == 0:
+        # decrypt the data        
+        l, r = round2(left, right)
+        l, r = round1(l, r)
+        # switch the left and right
+        switch(l, r)
+        return
+    else:
+        print("Invalid flag")
+        return
+    
 # switch them up 
 def switch(left, right):
     # switch left and right
     left, right = right, left
-
     # concat the two variables
     data = str(left) + str(right)
-
     return print(data)
 
 def swap(code, pos1, pos2): 
@@ -50,10 +62,10 @@ def round1(left, right):
     left_temp = right
     # XOR right_h and left
     new_right = right_h ^ left
-    new_left = left_temp
+    new_left = int(left_temp)
     
     # return left and right, call function round2
-    return round2(new_left, new_right)
+    return new_left, new_right
 
 def round2(new_left, new_right):
     # right gets into function
@@ -62,9 +74,12 @@ def round2(new_left, new_right):
     # copy right to left
     left_temp = new_right
     # XOR right_h and left
-    right = right_h ^ new_left
+    right = right_h ^ int(new_left)
     left = left_temp    
     # return print("Left: ", left, "Right: ", right)
-    return switch(left, right)
+    return left, right
 
-encrypt("1232456789")
+cipher(gen_voucher(122), 0)
+# cipher("584033877444142", 1) #- > This Decrypts
+
+encrypt(data)

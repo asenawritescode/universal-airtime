@@ -1,37 +1,18 @@
 from main import *
 
-def bin_slice(bin_data):
-    r = bin(bin_data)[2:]
-    return r
-
-def bin_to_decimal(bin_data):
-    # Loop over the bin_data array and convert to decimal
-    r = []
-    for i in range(len(bin_data)):
-        r.append(int(bin_data[i], 2))
-    
-    return print(''.join(map(str, r)))
-
-def convert_to_binary(n):
-    # convert the number to binary
-    return list(map(bin_slice,bytearray(n, 'utf8')))
-
 def cipher(data, flag):
     # Check the length of the data, if even or odd
-    data = convert_to_binary(data)
-    
     left, right = data[:len(data)//2], data[len(data)//2:]
-
     if flag == 1:
         if len(data) % 2 != 0:
-            print("Invalid voucher regenerate again !")
-            
+            print("Invalid voucher regenerate again !")  
         # encrypt the data   
         l, r = round1(left, right)
         a, b = round2(l, r)
         # switch the left and right
-        return switch(a, b)
-    
+        result = switch(a, b)
+        print(result)
+        return result
     elif flag == 0:
         # decrypt the data        
         l, r = round2(left, right)
@@ -46,32 +27,14 @@ def cipher(data, flag):
     
 # switch them up 
 def switch(left, right):
-    # switch left and right
-    left, right = right, left
-    # return concat the two variables
-    # data = str(left) + str(right)
-    print(left + right)
-    return bin_to_decimal(left + right)
+    left, right = right, left # switch left and right
+    data = left + right # concat the two variables
+    return data
 
 def swap(code, pos1, pos2):  
-    # swap the position of the characters 
-    code[pos1], code[pos2] = code[pos2], code[pos1] 
-    # convert list to string 
-    return code
-
-def xor(a,b):
-    c = []
-    e = []
-    print(len(a))
-    print(b)
-    for i in range(len(a)):
-        for j in range(len(b[i])):
-            d = ord(a[i][j]) ^ ord(b[i][j])
-            e.append(d)
-        f = ''.join(map(str, e))
-        c.append(f)
-        e.clear()
-    return c
+    code = list(code)  # convert string to list of characters 
+    code[pos1], code[pos2] = code[pos2], code[pos1] # swap the position of the characters 
+    return ''.join(code) # convert list to string 
 
 def  hash1(n):
     # swap string positions
@@ -83,38 +46,28 @@ def  hash2(n):
     n = swap(n, 1, (len(n)-1))
     return n
 
-# function round 1
 def round1(left, right):
-    # right gets into function
     right_h = hash1(right)
-
-    # copy right to left
-    left_temp = right
-
-    # XOR right_h and left
-    new_right = xor(right_h, left)
-
-    # assign the right to the new left 
+    left_temp = right  
+    new_right = ""
+    for i in range(len(left)):
+        new_right += str(ord(right_h[i]) ^ ord(left[i]))
     new_left = left_temp
-    # return 
+    print("1-",new_left, new_right)
+    return new_left, new_right  
+
+def round2(left, right):
+    right_h = hash2(right)
+    left_temp = right
+    new_right = ""
+    for i in range(len(left)):
+        new_right += str(ord(right_h[i]) ^ ord(left[i]))
+    new_left = left_temp
+    print("2-",new_left, new_right)
     return new_left, new_right
 
-def round2(new_left, new_right):
-    # right gets into function
-    right_h = hash2(new_right)
-    
-    # copy right to left
-    left_temp = new_right
-    
-    # XOR right_h and left
-    right = xor(right_h, new_left)
-
-    left = left_temp    
-    # return 
-    return left, right
-
 # cipher(gen_voucher(122), 1)
+cipher("7353131024706485", 0)
 
-# cipher("0224185899658401", 1)
-# these are 27 in number (14,13)
-cipher("48485052495653586911191251", 0)
+# cipher("6229162160415819", 1)
+# cipher("480919510224841438", 0)

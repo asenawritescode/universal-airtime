@@ -1,4 +1,4 @@
-from main import *
+from GenerateVoucher import gen_voucher
 from RetryDecorator import Retry
 from InvalidVoucher import InvalidVoucher
     
@@ -65,6 +65,5 @@ def round2(left, right):
 
 # cipher(gen_voucher(10), 1)
 @Retry(tries=100, delay=0.1, exceptions=(InvalidVoucher))
-def test():
+def run():
     cipher(cipher(gen_voucher(10), 1), 0) 
-test()

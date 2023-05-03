@@ -6,6 +6,8 @@ def cipher(data, flag):
     
     if len(data) % 2 != 0:     # Check the length of the data, if even or odd
         raise InvalidVoucher 
+    if len(data) > 16:
+        raise InvalidVoucher
     
     left, right = data[:len(data)//2], data[len(data)//2:]
     
@@ -13,14 +15,14 @@ def cipher(data, flag):
         l, r = round1(left, right)
         a, b = round2(l, r)
         result = switch(a, b) # switch the left and right
-        print(result)
+        print("encrypted - >",result)
         return result
     
     elif flag == 0: # decrypt the data        
         l, r = round2(left, right)
         l, r = round1(l, r)
         result = switch(l, r) # switch the left and right
-        print(result)
+        print("decrypted - >",result)
         return result
     else:
         raise UserWarning("Error Invalid flag")
@@ -50,7 +52,6 @@ def round1(left, right):
     for i in range(len(left)):
         new_right += str(ord(right_h[i]) ^ ord(left[i]))
     new_left = left_temp
-    print("1-",new_left, new_right)
     return new_left, new_right  
 
 def round2(left, right):
@@ -60,10 +61,12 @@ def round2(left, right):
     for i in range(len(left)):
         new_right += str(ord(right_h[i]) ^ ord(left[i]))
     new_left = left_temp
-    print("2-",new_left, new_right)
     return new_left, new_right
 
 # cipher(gen_voucher(10), 1)
-@Retry(tries=100, delay=0.1, exceptions=(InvalidVoucher))
+@Retry(tries=50, delay=0.1, exceptions=(InvalidVoucher))
 def run():
-    cipher(cipher(gen_voucher(10), 1), 0) 
+    cipher(cipher(gen_voucher(100), 1), 0)
+    # Generated code - > 7010384194426156 
+    # cipher("54712081143779051097", 1) # Encryption
+    # cipher("103120384234825917", 0) # Decryption

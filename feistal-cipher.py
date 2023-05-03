@@ -1,31 +1,30 @@
 from main import *
-
+from RetryDecorator import Retry
+from InvalidVoucher import InvalidVoucher
+    
 def cipher(data, flag):
-    # Check the length of the data, if even or odd
+    
+    if len(data) % 2 != 0:     # Check the length of the data, if even or odd
+        raise InvalidVoucher 
+    
     left, right = data[:len(data)//2], data[len(data)//2:]
-    if flag == 1:
-        if len(data) % 2 != 0:
-            print("Invalid voucher regenerate again !")  
-        # encrypt the data   
+    
+    if flag == 1: # encrypt the data   
         l, r = round1(left, right)
         a, b = round2(l, r)
-        # switch the left and right
-        result = switch(a, b)
+        result = switch(a, b) # switch the left and right
         print(result)
         return result
-    elif flag == 0:
-        # decrypt the data        
+    
+    elif flag == 0: # decrypt the data        
         l, r = round2(left, right)
         l, r = round1(l, r)
-        # switch the left and right
-        result = switch(l, r)
+        result = switch(l, r) # switch the left and right
         print(result)
         return result
     else:
-        print("Invalid flag")
-        return
-    
-# switch them up 
+        raise UserWarning("Error Invalid flag")
+            
 def switch(left, right):
     left, right = right, left # switch left and right
     data = left + right # concat the two variables
@@ -36,13 +35,11 @@ def swap(code, pos1, pos2):
     code[pos1], code[pos2] = code[pos2], code[pos1] # swap the position of the characters 
     return ''.join(code) # convert list to string 
 
-def  hash1(n):
-    # swap string positions
+def  hash1(n):  # swap string positions
     n = swap(n, 0, 2)
     return n
 
-def  hash2(n):
-    # swap string positions
+def  hash2(n):  # swap string positions
     n = swap(n, 1, (len(n)-1))
     return n
 
@@ -66,8 +63,8 @@ def round2(left, right):
     print("2-",new_left, new_right)
     return new_left, new_right
 
-# cipher(gen_voucher(122), 1)
-cipher("7353131024706485", 0)
-
-# cipher("6229162160415819", 1)
-# cipher("480919510224841438", 0)
+# cipher(gen_voucher(10), 1)
+@Retry(tries=100, delay=0.1, exceptions=(InvalidVoucher))
+def test():
+    cipher(cipher(gen_voucher(10), 1), 0) 
+test()

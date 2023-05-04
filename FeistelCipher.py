@@ -66,7 +66,7 @@ def round2(left, right):
 # cipher(gen_voucher(10), 1)
 @Retry(tries=50, delay=0.1, exceptions=(InvalidVoucher))
 def run():
-    cipher(cipher(gen_voucher(100), 1), 0)
+    cipher(cipher(gen_voucher(120), 1), 0)
     # Generated code - > 7010384194426156 
     # cipher("54712081143779051097", 1) # Encryption
     # cipher("103120384234825917", 0) # Decryption

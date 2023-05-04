@@ -1,4 +1,4 @@
-# universal-airtime
+# Universal Airtime 4 Everyone
 
 This is a project that we picked up after the Africa's Talking API Hackthon by Elarian, Postman and Elarian.
 

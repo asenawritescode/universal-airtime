@@ -15,18 +15,32 @@ def cipher(data, flag):
         l, r = round1(left, right)
         a, b = round2(l, r)
         result = switch(a, b) # switch the left and right
-        print("encrypted - >",result)
+        # print("encrypted - >",result)
         return result
     
     elif flag == 0: # decrypt the data        
         l, r = round2(left, right)
         l, r = round1(l, r)
         result = switch(l, r) # switch the left and right
-        print("decrypted - >",result)
-        return result
+        amount = get_amount(result)
+        # print("decrypted - >",result)
+        return result, amount
     else:
         raise UserWarning("Error Invalid flag")
-            
+
+def get_amount(data):
+    # data = list(data)
+    d = ""
+    end = int(data[15])
+    for i in range(0, end):
+        pos = pow(2, i)
+        d += str(data[pos])
+    # print(reverse(d))
+    return reverse(d)
+
+def reverse(x):
+  return x[::-1]
+
 def switch(left, right):
     left, right = right, left # switch left and right
     data = left + right # concat the two variables
@@ -66,7 +80,7 @@ def round2(left, right):
 # cipher(gen_voucher(10), 1)
 @Retry(tries=50, delay=0.1, exceptions=(InvalidVoucher))
 def run():
-    cipher(cipher(gen_voucher(120), 1), 0)
-    # Generated code - > 7010384194426156 
-    # cipher("54712081143779051097", 1) # Encryption
-    # cipher("103120384234825917", 0) # Decryption
+    # cipher(cipher(gen_voucher(120), 1), 0)
+    # encry_code = 6720130457122050
+    # plain_code = 6020130337323353 - 120
+    

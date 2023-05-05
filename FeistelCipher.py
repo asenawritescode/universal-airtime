@@ -15,10 +15,11 @@ def cipher(data, flag):
         l, r = round1(left, right)
         a, b = round2(l, r)
         result = switch(a, b) # switch the left and right
-        # print("encrypted - >",result)
         return result
     
-    elif flag == 0: # decrypt the data        
+    elif flag == 0: # decrypt the data
+        e = left + right
+        print("Encrypted - >",e)        
         l, r = round2(left, right)
         l, r = round1(l, r)
         result = switch(l, r) # switch the left and right
@@ -80,7 +81,9 @@ def round2(left, right):
 # cipher(gen_voucher(10), 1)
 @Retry(tries=50, delay=0.1, exceptions=(InvalidVoucher))
 def run():
-    # cipher(cipher(gen_voucher(120), 1), 0)
     # encry_code = 6720130457122050
     # plain_code = 6020130337323353 - 120
-    
+
+    p, a = cipher(cipher(gen_voucher(120), 1), 0)
+    output  = f'Plain code -> {p} \nAmount -> {a}'
+    print(output)    

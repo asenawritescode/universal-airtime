@@ -31,5 +31,4 @@ def gen_voucher(amount):
    a_digits = [int(digit) for digit in a_str]
 
    final = add_value(a_digits, v_digits)
-   print(final ,"- > Generated voucher")
    return final

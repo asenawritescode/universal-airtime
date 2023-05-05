@@ -84,6 +84,6 @@ def run():
     # encry_code = 6720130457122050
     # plain_code = 6020130337323353 - 120
 
-    e, p, a = cipher(cipher(gen_voucher(120), 1), 0)
+    e, p, a = cipher(cipher(gen_voucher(1000), 1), 0)
     output  = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
     print(output)    

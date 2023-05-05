@@ -19,13 +19,13 @@ def cipher(data, flag):
     
     elif flag == 0: # decrypt the data
         e = left + right
-        print("Encrypted - >",e)        
+        # print("Encrypted - >",e)        
         l, r = round2(left, right)
         l, r = round1(l, r)
         result = switch(l, r) # switch the left and right
         amount = get_amount(result)
         # print("decrypted - >",result)
-        return result, amount
+        return e, result, amount
     else:
         raise UserWarning("Error Invalid flag")
 
@@ -84,6 +84,6 @@ def run():
     # encry_code = 6720130457122050
     # plain_code = 6020130337323353 - 120
 
-    p, a = cipher(cipher(gen_voucher(120), 1), 0)
-    output  = f'Plain code -> {p} \nAmount -> {a}'
+    e, p, a = cipher(cipher(gen_voucher(120), 1), 0)
+    output  = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
     print(output)    

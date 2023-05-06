@@ -1,7 +1,7 @@
 from FeistelCipher import run
 
 codes = ""
-for _ in range(5): # Generate 5 vouchers
+for _ in range(5): # Generate 5 vouchers 
     s = run()
     codes+= "{}\n\n".format(s)
 # print(codes)

@@ -1,99 +1,6 @@
 from GenerateVoucher import Voucher
 from RetryDecorator import Retry
 from InvalidVoucher import InvalidVoucher
-    
-def cipher(data, flag):
-    
-    left, right = data.split_voucher() # split the data into two halves
-    print("left ->",left)
-    print("right ->",right)
-
-    if len(data) % 2 != 0:     # Check the length of the data, if even or odd
-        raise InvalidVoucher 
-    if len(data) > 16:
-        raise InvalidVoucher
-    
-    
-    if flag == 1: # encrypt the data   
-        l, r = round1(left, right)
-        a, b = round2(l, r)
-        result = switch(a, b) # switch the left and right
-        return result
-    
-    elif flag == 0: # decrypt the data
-        e = left + right
-        # print("Encrypted - >",e)        
-        l, r = round2(left, right)
-        l, r = round1(l, r)
-        result = switch(l, r) # switch the left and right
-        amount = get_amount(result)
-        # print("decrypted - >",result)
-        return e, result, amount
-    else:
-        raise UserWarning("Error Invalid flag")
-
-def get_amount(data):
-    # data = list(data)
-    d = ""
-    end = int(data[15])
-    for i in range(0, end):
-        pos = pow(2, i)
-        d += str(data[pos])
-    # print(reverse(d))
-    return reverse(d)
-
-def reverse(x):
-  return x[::-1]
-
-def switch(left, right):
-    left, right = right, left # switch left and right
-    data = left + right # concat the two variables
-    return data
-
-def swap(code, pos1, pos2):  
-    code = list(code)  # convert string to list of characters 
-    code[pos1], code[pos2] = code[pos2], code[pos1] # swap the position of the characters 
-    return ''.join(code) # convert list to string 
-
-def  hash1(n):  # swap string positions
-    n = swap(n, 0, 2)
-    return n
-
-def  hash2(n):  # swap string positions
-    n = swap(n, 1, (len(n)-1))
-    return n
-
-def round1(left, right):
-    right_h = hash1(right)
-    left_temp = right  
-    new_right = ""
-    for i in range(len(left)):
-        new_right += str(ord(right_h[i]) ^ ord(left[i]))
-    new_left = left_temp
-    return new_left, new_right  
-
-def round2(left, right):
-    right_h = hash2(right)
-    left_temp = right
-    new_right = ""
-    for i in range(len(left)):
-        new_right += str(ord(right_h[i]) ^ ord(left[i]))
-    new_left = left_temp
-    return new_left, new_right
-
-@Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
-def run():
-    # encry_code = 6720130457122050
-    # plain_code = 6020130337323353 - 120
-    a = Voucher(1000)
-    e, p, a = cipher(cipher(a, 1), 0)
-    output  = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
-    print(output)
-    return output
-
-run()
-
-
 
 class FeistelCipher:
     """
@@ -302,17 +209,18 @@ class FeistelCipher:
         end = int(data[15])
         d = ""
         for i in range (0, end):
-            pos = pow(2,1)
+            pos = pow(2, i)
             d += str(data[pos])
         amount = data[::-1] #reverse string
         return amount
     
+    @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
     def run(self, amount):
         """
         Runs the Feistel Cipher Algorithm
         """
 
         v = Voucher(amount)
-        e, p, a = cipher(cipher(v, 1), 0)
+        e, p, a = self.cipher(self.cipher(v, 1), 0)
         output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
         return output

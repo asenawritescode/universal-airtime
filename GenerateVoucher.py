@@ -88,7 +88,8 @@ class Voucher:
         
         Raises:
         ------
-
+        ValueError
+            If amount is not in the range 10-1000
         
         Returns:
         -------

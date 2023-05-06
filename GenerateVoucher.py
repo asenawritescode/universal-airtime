@@ -50,6 +50,15 @@ class Voucher:
 
         return 'Voucher(' + self.amount +','+ self.code +')'
     
+    def __len__(self) -> int:
+        """
+        Returns:
+        -------
+        length : int
+        """
+
+        return len(self.code)
+    
     def add_value(self, voucher: int, amount: int) -> str:
         """
         Embed voucher value to the geneated voucher code
@@ -108,3 +117,21 @@ class Voucher:
         voucher = self.add_value(v_digits, a_digits) 
 
         return voucher
+
+    def split_voucher( self ) -> list:
+        """
+        Split the voucher code into two halves
+
+        Parameters:
+        ----------
+        voucher: str
+            The voucher code
+        
+        Returns:
+        -------
+        left, right : list
+        """
+
+        left, right = self.code[:len(self.code)//2], self.code[len(self.code)//2:]
+
+        return left, right

@@ -10,6 +10,7 @@ def add_value(a , v):
         pos = pow(2, i)
         v[pos] = d
         i-=1
+    v[15] = n # assign amount value to the position 15 
 
     return ''.join(map(str, v))
 
@@ -30,5 +31,4 @@ def gen_voucher(amount):
    a_digits = [int(digit) for digit in a_str]
 
    final = add_value(a_digits, v_digits)
-   print(final)
    return final

@@ -6,6 +6,8 @@ def cipher(data, flag):
     
     if len(data) % 2 != 0:     # Check the length of the data, if even or odd
         raise InvalidVoucher 
+    if len(data) > 16:
+        raise InvalidVoucher
     
     left, right = data[:len(data)//2], data[len(data)//2:]
     
@@ -13,18 +15,33 @@ def cipher(data, flag):
         l, r = round1(left, right)
         a, b = round2(l, r)
         result = switch(a, b) # switch the left and right
-        print(result)
         return result
     
-    elif flag == 0: # decrypt the data        
+    elif flag == 0: # decrypt the data
+        e = left + right
+        # print("Encrypted - >",e)        
         l, r = round2(left, right)
         l, r = round1(l, r)
         result = switch(l, r) # switch the left and right
-        print(result)
-        return result
+        amount = get_amount(result)
+        # print("decrypted - >",result)
+        return e, result, amount
     else:
         raise UserWarning("Error Invalid flag")
-            
+
+def get_amount(data):
+    # data = list(data)
+    d = ""
+    end = int(data[15])
+    for i in range(0, end):
+        pos = pow(2, i)
+        d += str(data[pos])
+    # print(reverse(d))
+    return reverse(d)
+
+def reverse(x):
+  return x[::-1]
+
 def switch(left, right):
     left, right = right, left # switch left and right
     data = left + right # concat the two variables
@@ -50,7 +67,6 @@ def round1(left, right):
     for i in range(len(left)):
         new_right += str(ord(right_h[i]) ^ ord(left[i]))
     new_left = left_temp
-    print("1-",new_left, new_right)
     return new_left, new_right  
 
 def round2(left, right):
@@ -60,10 +76,15 @@ def round2(left, right):
     for i in range(len(left)):
         new_right += str(ord(right_h[i]) ^ ord(left[i]))
     new_left = left_temp
-    print("2-",new_left, new_right)
     return new_left, new_right
 
 # cipher(gen_voucher(10), 1)
-@Retry(tries=100, delay=0.1, exceptions=(InvalidVoucher))
+@Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
 def run():
-    cipher(cipher(gen_voucher(10), 1), 0) 
+    # encry_code = 6720130457122050
+    # plain_code = 6020130337323353 - 120
+
+    e, p, a = cipher(cipher(gen_voucher(1000), 1), 0)
+    output  = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
+    print(output)
+    return output    

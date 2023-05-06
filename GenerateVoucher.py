@@ -16,7 +16,7 @@ class Voucher:
     gen_voucher(amount) -> str:
         Generates a voucher code of the specified value
     
-    addValue(amount, voucher)-> str:
+    add_value(amount, voucher)-> str:
         Embed voucher value to the geneated voucher code
     
     """

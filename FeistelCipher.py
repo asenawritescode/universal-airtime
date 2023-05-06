@@ -79,11 +79,12 @@ def round2(left, right):
     return new_left, new_right
 
 # cipher(gen_voucher(10), 1)
-@Retry(tries=50, delay=0.1, exceptions=(InvalidVoucher))
+@Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
 def run():
     # encry_code = 6720130457122050
     # plain_code = 6020130337323353 - 120
 
     e, p, a = cipher(cipher(gen_voucher(1000), 1), 0)
     output  = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
-    print(output)    
+    print(output)
+    return output    

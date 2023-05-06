@@ -13,10 +13,10 @@ class Voucher:
     
     Methods:
     -------
-    gen_voucher(amount):
+    gen_voucher(amount) -> str:
         Generates a voucher code of the specified value
     
-    addValue(amount, voucher):
+    addValue(amount, voucher)-> str:
         Embed voucher value to the geneated voucher code
     
     """
@@ -95,7 +95,7 @@ class Voucher:
         amount: int
             The value of the voucher
         
-        Raises:
+    Raises:
         ------
         ValueError
             If amount is not in the range 10-1000

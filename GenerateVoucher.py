@@ -107,7 +107,3 @@ class Voucher:
         voucher = self.add_value(v_digits, a_digits) 
 
         return voucher
-
-a = Voucher(100)
-
-print(a)

@@ -80,7 +80,6 @@ class FeistelCipher:
         str
             The encrypted or decrypted voucher code
         """
-        print(type(voucher))
         left, right = split_voucher(voucher)
         
         if len(voucher) % 2 != 0:

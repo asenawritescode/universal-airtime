@@ -35,21 +35,22 @@ class FeistelCipher:
     
     run(self) -> str
         Runs the Feistel Cipher Algorithm
-    
-    
     """
     
-    def __init__(self, voucher, flag):
+    def __init__(self,amount ,flag):
         """
         Parameters:
         ----------
         voucher : str
             The voucher code
+        amount : int
+            The value of the voucher
         flag : int
             The flag to indicate whether to encrypt or decrypt
         """
        
-        self.voucher = voucher
+        self.amount = amount        
+        self.voucher = Voucher(self.amount)
         self.flag = flag
 
     def __str__(self) -> str:
@@ -78,15 +79,14 @@ class FeistelCipher:
         str
             The encrypted or decrypted voucher code
         """
+        if len(voucher) % 2 != 0:
+            raise InvalidVoucher
         
         left, right = voucher.split_voucher()
 
-        if len() % 2 != 2:
-            raise InvalidVoucher
-
         if flag == 1:
-            l, r = self.round(left, right)
-            a, b = self.round(l, r)
+            l, r = self.round(left, right, 0 , 2)
+            a, b = self.round(l, r, 1 , 2)
             result = self.switch(a, b)
             return result
         elif flag == 0:
@@ -99,7 +99,7 @@ class FeistelCipher:
         else:
             raise UserWarning("Error Invalid flag")
 
-    def round(self, left, right):
+    def round(self, left, right, pos1, pos2):
         """
         Single round of the Feistel Cipher Algorithm
         
@@ -116,7 +116,7 @@ class FeistelCipher:
             The left and right halves of the voucher code
         """
         
-        right_h = self.hash_first(right)
+        right_h = self.hash(right, pos1, pos2 = len(right)-1)
         left_temp = right
         new_right = ""
         for i in range(len(left)):
@@ -214,13 +214,16 @@ class FeistelCipher:
         amount = data[::-1] #reverse string
         return amount
     
-    @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
-    def run(self, amount):
+    # @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
+    def run(self):
         """
         Runs the Feistel Cipher Algorithm
         """
 
-        v = Voucher(amount)
+        v = Voucher(self.amount)
         e, p, a = self.cipher(self.cipher(v, 1), 0)
         output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
         return output
+
+f = FeistelCipher(198, 1)
+print(f.run())

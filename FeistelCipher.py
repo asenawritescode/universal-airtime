@@ -211,7 +211,7 @@ class FeistelCipher:
         for i in range (0, end):
             pos = pow(2, i)
             d += str(data[pos])
-        amount = data[::-1] #reverse string
+        amount = d[::-1] #reverse string
         return amount
     
     # @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))

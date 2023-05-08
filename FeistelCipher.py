@@ -1,6 +1,7 @@
 from GenerateVoucher import Voucher
 from RetryDecorator import Retry
 from InvalidVoucher import InvalidVoucher
+from SplitVoucher import split_voucher
 
 class FeistelCipher:
     """
@@ -79,10 +80,12 @@ class FeistelCipher:
         str
             The encrypted or decrypted voucher code
         """
+        print(type(voucher))
+        left, right = split_voucher(voucher)
+        
         if len(voucher) % 2 != 0:
             raise InvalidVoucher
         
-        left, right = voucher.split_voucher()
 
         if flag == 1:
             l, r = self.round(left, right, 0 , 2)
@@ -91,8 +94,8 @@ class FeistelCipher:
             return result
         elif flag == 0:
             e = left + right
-            l, r = self.round(left, right)
-            l, r = self.round(l, r)
+            l, r = self.round(left, right, 1 , 2)
+            l, r = self.round(l, r, 0 , 2)
             result = self.switch(l, r)
             amount = self.get_amount(result)
             return e, result, amount
@@ -206,7 +209,8 @@ class FeistelCipher:
         str
             The amount
         """
-        end = int(data[15])
+        end = int(data[15]) # Should be in the range of 2-4 (write a function to check, assert if not)
+        
         d = ""
         for i in range (0, end):
             pos = pow(2, i)
@@ -214,16 +218,16 @@ class FeistelCipher:
         amount = d[::-1] #reverse string
         return amount
     
-    # @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
+    @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
     def run(self):
         """
         Runs the Feistel Cipher Algorithm
         """
 
-        v = Voucher(self.amount)
+        v = Voucher(100)
         e, p, a = self.cipher(self.cipher(v, 1), 0)
         output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
         return output
-
+        
 f = FeistelCipher(198, 1)
 print(f.run())

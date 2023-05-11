@@ -101,7 +101,7 @@ class FeistelCipher:
         else:
             raise UserWarning("Error Invalid flag")
 
-    def round(self, left, right, pos1):
+    def round(self, left, right, pos1, pos2):
         """
         Single round of the Feistel Cipher Algorithm
 
@@ -121,7 +121,8 @@ class FeistelCipher:
         right_h = self.hash(right, pos1, pos2=len(right) - 1)
         left_temp = right
         new_right = ""
-        for i in range(enumerate(left)):
+        len_left = len(left)
+        for i in range(len_left):
             new_right += str(ord(right_h[i]) ^ ord(left[i]))
         new_left = left_temp
         return new_left, new_right

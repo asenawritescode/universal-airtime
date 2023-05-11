@@ -76,13 +76,13 @@ class Voucher:
         ------
         voucher : str
         """
-        n = int(str(len(amount)))
-        i = n - 1
-        for d in amount:
+        amount_len = int(str(len(amount)))
+        i = amount_len - 1
+        for digit in amount:
             pos = pow(2, i)
-            voucher[pos] = d  # Embed the amount to the voucher
+            voucher[pos] = digit  # Embed the amount to the voucher
             i -= 1
-        voucher[15] = n  # assign amount value len at position 15
+        voucher[15] = amount_len  # assign amount value len at position 15
 
         voucher = "".join(map(str, voucher))
 

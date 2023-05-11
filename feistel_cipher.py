@@ -112,6 +112,10 @@ class FeistelCipher:
             The left half of the voucher code
         right : str
             The right half of the voucher code
+        pos1 : int
+            The first position
+        pos2 : int
+            The second position
 
         Returns:
         -------

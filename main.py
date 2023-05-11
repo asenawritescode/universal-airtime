@@ -11,18 +11,20 @@ def main():
     """
     Runs the Feistel Cipher Algorithm
     """
-    f = FeistelCipher(50, 1)
+    new_cipher = FeistelCipher(50, 1)
     # print(f.__dict__)
-    e, p, a = f.cipher(f.cipher(f.voucher.code, f.flag), 0)
-    output = f"Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}"
+    voucher_code, plain_code, amount = new_cipher.cipher(
+        new_cipher.cipher(new_cipher.voucher.code, new_cipher.flag), 0
+    )
+    output = f"Voucher Code -> {voucher_code} \nPlain Code -> {plain_code} \nAmount -> {amount}"
     return output
 
 
 if __name__ == "__main__":
-    codes = ""
+    CODES = ""
     for i in range(2000):
         s = main()
-        codes += "{}\n\n".format(s)
+        CODES += f"\n\n{s}"
 
-    with open("50codes.txt", "a") as f:
-        f.write(codes)
+    with open("50codes.txt", "a", encoding="utf-8") as fp:
+        fp.write(CODES)

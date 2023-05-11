@@ -85,6 +85,8 @@ class FeistelCipher:
         if len(voucher) % 2 != 0:
             raise InvalidVoucher
         
+        if len(voucher) > 16:
+            raise InvalidVoucher
 
         if flag == 1:
             l, r = self.round(left, right, 0 , 2)
@@ -217,16 +219,16 @@ class FeistelCipher:
         amount = d[::-1] #reverse string
         return amount
     
-    @Retry(tries=500, delay=0.5, exceptions=(InvalidVoucher))
-    def run(self):
-        """
-        Runs the Feistel Cipher Algorithm
-        """
-
-        v = Voucher(100)
-        e, p, a = self.cipher(self.cipher(v, 1), 0)
-        output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
-        return output
+@Retry(tries=500, delay=0, exceptions=(InvalidVoucher))
+def run():
+    """
+    Runs the Feistel Cipher Algorithm
+    """
+    f = FeistelCipher(198, 1)
+    # print(f.__dict__)
+    e, p, a = f.cipher(f.cipher(f.voucher.code, f.flag), 0)
+    output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
+    print(output)
+    return output
         
-f = FeistelCipher(198, 1)
-print(f.run())
+run()

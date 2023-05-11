@@ -30,7 +30,7 @@ class Voucher:
         """
 
         self.amount = amount
-        self.code = self.gen_voucher(amount)
+        self.code = self.gen_voucher(self.amount)
 
     def __str__(self):  
         """
@@ -48,7 +48,7 @@ class Voucher:
         Voucher object : str
         """
 
-        return 'Voucher(' + self.amount +','+ self.code +')'
+        return f'Voucher( {self.amount} , {self.code} )'
     
     def __len__(self) -> int:
         """

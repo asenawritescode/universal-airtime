@@ -1,3 +1,4 @@
+"""Module to run voucher code through Feistel Algorithm for encryption and decryption."""
 from GenerateVoucher import Voucher
 from InvalidVoucher import InvalidVoucher
 from SplitVoucher import split_voucher

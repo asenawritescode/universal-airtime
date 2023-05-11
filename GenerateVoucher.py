@@ -1,3 +1,4 @@
+"""Module to generate voucher codes of a specified value."""
 from nanoid import generate as g
 
 

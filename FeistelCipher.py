@@ -1,5 +1,4 @@
 from GenerateVoucher import Voucher
-from RetryDecorator import Retry
 from InvalidVoucher import InvalidVoucher
 from SplitVoucher import split_voucher
 
@@ -34,8 +33,6 @@ class FeistelCipher:
     get_amount(self, data: str) -> str
         Gets the amount from the voucher plain code
     
-    run(self) -> str
-        Runs the Feistel Cipher Algorithm
     """
     
     def __init__(self,amount ,flag):
@@ -219,16 +216,3 @@ class FeistelCipher:
         amount = d[::-1] #reverse string
         return amount
     
-@Retry(tries=500, delay=0, exceptions=(InvalidVoucher))
-def run():
-    """
-    Runs the Feistel Cipher Algorithm
-    """
-    f = FeistelCipher(198, 1)
-    # print(f.__dict__)
-    e, p, a = f.cipher(f.cipher(f.voucher.code, f.flag), 0)
-    output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
-    print(output)
-    return output
-        
-run()

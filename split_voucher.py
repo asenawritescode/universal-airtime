@@ -1,4 +1,7 @@
-def split_voucher( code ) -> list:
+"""Functions to split the voucher code into two halves"""
+
+
+def split_voucher(code) -> list:
     """
     Split the voucher code into two halves
 
@@ -6,12 +9,12 @@ def split_voucher( code ) -> list:
     ----------
     voucher: str
         The voucher code
-    
+
     Returns:
     -------
     left, right : list
     """
     code = str(code)
-    left, right = code[:len(code)//2], code[len(code)//2:]
+    left, right = code[: len(code) // 2], code[len(code) // 2 :]
 
     return left, right

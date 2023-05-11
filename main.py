@@ -1,6 +1,7 @@
-from FeistelCipher import FeistelCipher
-from InvalidVoucher import InvalidVoucher
-from RetryDecorator import Retry
+"""Main module for the Universal-Aritime Project"""
+from feistel_cipher import FeistelCipher
+from invalid_voucher import InvalidVoucher
+from retry_decorator import Retry
 
 # Run the Feistel Cipher Algorithm
 

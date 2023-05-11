@@ -1,7 +1,7 @@
 """Module to run voucher code through Feistel Algorithm for encryption and decryption."""
-from GenerateVoucher import Voucher
-from InvalidVoucher import InvalidVoucher
-from SplitVoucher import split_voucher
+from generate_voucher import Voucher
+from invalid_voucher import InvalidVoucher
+from split_voucher import split_voucher
 
 
 class FeistelCipher:

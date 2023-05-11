@@ -1,23 +1,27 @@
-from RetryDecorator import Retry
-from InvalidVoucher import InvalidVoucher
 from FeistelCipher import FeistelCipher
+from InvalidVoucher import InvalidVoucher
+from RetryDecorator import Retry
+
 # Run the Feistel Cipher Algorithm
 
+
 @Retry(tries=1000, delay=0, exceptions=(InvalidVoucher))
-def run():
+def main():
     """
     Runs the Feistel Cipher Algorithm
     """
-    f = FeistelCipher(198, 1)
+    f = FeistelCipher(50, 1)
     # print(f.__dict__)
     e, p, a = f.cipher(f.cipher(f.voucher.code, f.flag), 0)
-    output = f'Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}'
+    output = f"Voucher Code -> {e} \nPlain Code -> {p} \nAmount -> {a}"
     return output
-        
-codes = ""        
-for i in range(10):
-    s = run()
-    codes += "{}\n\n".format(s)
 
-with open("codes.txt", "a") as f:
-    f.write(codes)
+
+if __name__ == "__main__":
+    codes = ""
+    for i in range(2000):
+        s = main()
+        codes += "{}\n\n".format(s)
+
+    with open("50codes.txt", "a") as f:
+        f.write(codes)

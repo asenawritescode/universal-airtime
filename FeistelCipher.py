@@ -92,12 +92,12 @@ class FeistelCipher:
             result = self.switch(a, b)
             return result
         elif flag == 0:
-            e = left + right
-            l, r = self.round(left, right, 1, 2)
-            l, r = self.round(l, r, 0, 2)
-            result = self.switch(l, r)
+            original_str = left + right
+            left_r, right_r = self.round(left, right, 1, 2)
+            left, right = self.round(left_r, right_r, 0, 2)
+            result = self.switch(left, right)
             amount = self.get_amount(result)
-            return e, result, amount
+            return original_str, result, amount
         else:
             raise UserWarning("Error Invalid flag")
 
@@ -171,13 +171,13 @@ class FeistelCipher:
         code[pos1], code[pos2] = code[pos2], code[pos1]
         return "".join(code)
 
-    def hash(self, n, pos1, pos2):
+    def hash(self, voucher_code, pos1, pos2):
         """
         Swap some string positions in the voucher code
 
         Parameters:
         ----------
-        n : str
+        voucher_code : str
             The voucher code
 
         pos1 : int
@@ -192,8 +192,8 @@ class FeistelCipher:
             The voucher code with swapped characters
         """
 
-        n = self.swap(n, pos1, pos2)
-        return n
+        voucher_code = self.swap(voucher_code, pos1, pos2)
+        return voucher_code
 
     def get_amount(self, data):
         """
@@ -213,9 +213,9 @@ class FeistelCipher:
             data[15]
         )  # Should be in the range of 2-4 (write a function to check, assert if not)
 
-        d = ""
+        amount_data = ""
         for i in range(0, end):
             pos = pow(2, i)
-            d += str(data[pos])
-        amount = d[::-1]  # reverse string
+            amount_data += str(data[pos])
+        amount = amount_data[::-1]  # reverse string
         return amount

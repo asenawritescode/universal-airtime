@@ -54,7 +54,7 @@ class FeistelCipher:
         self.flag = flag
 
     def __str__(self) -> str:
-        pass
+        return v.__str__()
 
     def cipher(self, voucher, flag):
         """

@@ -11,7 +11,7 @@ def main():
     """
     Runs the Feistel Cipher Algorithm
     """
-    new_cipher = FeistelCipher(50, 1)
+    new_cipher = FeistelCipher(100, 1)
     # print(f.__dict__)
     voucher_code, plain_code, amount = new_cipher.cipher(
         new_cipher.cipher(new_cipher.voucher.code, new_cipher.flag), 0
@@ -22,7 +22,7 @@ def main():
 
 if __name__ == "__main__":
     CODES = ""
-    for i in range(2000):
+    for i in range(10):
         s = main()
         CODES += f"\n\n{s}"
 

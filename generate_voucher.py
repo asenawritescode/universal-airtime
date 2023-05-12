@@ -117,7 +117,6 @@ class Voucher:
         a_str = list(str(amount))
         v_digits = [int(digit) for digit in v_str]
         a_digits = [int(digit) for digit in a_str]
-
         voucher = self.add_value(v_digits, a_digits)
 
         return voucher
